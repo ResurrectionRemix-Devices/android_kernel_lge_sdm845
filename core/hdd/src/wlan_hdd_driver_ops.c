@@ -1382,6 +1382,7 @@ static void hdd_cleanup_on_fw_down(void)
 		hdd_cleanup_scan_queue(hdd_ctx, NULL);
 	wlan_hdd_purge_notifier();
 	qdf_complete_wait_events();
+
 	EXIT();
 }
 
@@ -1446,6 +1447,7 @@ static void wlan_hdd_pld_uevent(struct device *dev,
 		cds_set_target_ready(false);
 		hdd_pld_ipa_uc_shutdown_pipes();
 		wlan_hdd_purge_notifier();
+		qdf_complete_wait_events();
 		break;
 	case PLD_FW_DOWN:
 		hdd_cleanup_on_fw_down();
