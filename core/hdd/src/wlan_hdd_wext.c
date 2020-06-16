@@ -8997,7 +8997,8 @@ static int __iw_setnone_getint(struct net_device *dev,
 		if (QDF_STATUS_SUCCESS !=
 		    sme_cfg_get_int(hHal, WNI_CFG_CURRENT_TX_POWER_LEVEL,
 				    &txpow2g)) {
-			return -EIO;
+			ret = -EIO;
+			break;
 		}
 		hdd_debug("2G tx_power %d", txpow2g);
 		break;
@@ -9015,7 +9016,8 @@ static int __iw_setnone_getint(struct net_device *dev,
 		if (QDF_STATUS_SUCCESS !=
 		    sme_cfg_get_int(hHal, WNI_CFG_CURRENT_TX_POWER_LEVEL,
 				    &txpow5g)) {
-			return -EIO;
+			ret = -EIO;
+			break;
 		}
 		hdd_debug("5G tx_power %d", txpow5g);
 		break;
