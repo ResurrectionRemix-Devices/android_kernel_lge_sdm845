@@ -24,6 +24,8 @@
 #include <linux/device.h>
 #include <linux/dma-mapping.h>
 #include <linux/dma-buf.h>
+#include <linux/devfreq_boost.h>
+#include <linux/cpu_input_boost.h>
 #include <linux/fb.h>
 #include <linux/init.h>
 #include <linux/ioport.h>
@@ -3383,6 +3385,10 @@ static int __ioctl_transition_dyn_mode_state(struct msm_fb_data_type *mfd,
 	mutex_lock(&mfd->switch_lock);
 	switch (cmd) {
 	case MSMFB_ATOMIC_COMMIT:
+#ifdef CONFIG_DEVFREQ_BOOST
+		cpu_input_boost_kick();	
+		devfreq_boost_kick(DEVFREQ_MSM_CPUBW);
+#endif
 		if ((mfd->switch_state == MDSS_MDP_WAIT_FOR_VALIDATE)
 				&& validate) {
 			if (mfd->switch_new_mode != SWITCH_RESOLUTION)
